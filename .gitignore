@@ -1,4 +1,7 @@
 __pycache__/
+build/
+pybench.egg-info
+.pytest_cache
 .DS_Store
 *.swp
 *.swo

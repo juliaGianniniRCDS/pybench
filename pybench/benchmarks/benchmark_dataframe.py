@@ -4,11 +4,17 @@ import importlib
 
 from pybench import run_benchmark
 
-
+### edited by JAG ###
+#@pytest.mark.parametrize("module", ["pandas", "cudf"])
+#@pytest.mark.parametrize(
+#    "data_path", ["/datasets/nyc_taxi/2015/yellow_tripdata_2015-01.csv"]
+#)
+## where my data is: /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/nyc_taxi/2015
 @pytest.mark.parametrize("module", ["pandas", "cudf"])
 @pytest.mark.parametrize(
-    "data_path", ["/datasets/nyc_taxi/2015/yellow_tripdata_2015-01.csv"]
+    "data_path", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/nyc_taxi/2015/yellow_tripdata_2015-01.csv"]
 )
+### ###
 @pytest.mark.parametrize("nrows", [10000000])
 def test_Read_CSV(benchmark, module, data_path, nrows):
     m = importlib.import_module(module)
@@ -22,17 +28,29 @@ def test_Read_CSV(benchmark, module, data_path, nrows):
         {"path": data_path, "nrows": nrows},
     )
 
-
+### edited by JAG ###
+#@pytest.mark.parametrize("module", ["pandas", "cudf"])
+#@pytest.mark.parametrize(
+#    "data_path",
+#    [
+#        (
+#            "/datasets/nyc_taxi/2015/yellow_tripdata_2015-01.csv",
+#            "/datasets/nyc_taxi/2015/yellow_tripdata_2015-02.csv",
+#        )
+#    ],
+#)
+## where my data is: /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/nyc_taxi/2015
 @pytest.mark.parametrize("module", ["pandas", "cudf"])
 @pytest.mark.parametrize(
     "data_path",
     [
         (
-            "/datasets/nyc_taxi/2015/yellow_tripdata_2015-01.csv",
-            "/datasets/nyc_taxi/2015/yellow_tripdata_2015-02.csv",
+            "/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/nyc_taxi/2015/yellow_tripdata_2015-01.csv",
+            "/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/nyc_taxi/2015/yellow_tripdata_2015-02.csv",
         )
     ],
 )
+### ###
 @pytest.mark.parametrize("nrows", [50000])
 def test_Merge_DataFrames(benchmark, module, data_path, nrows):
     m = importlib.import_module(module)
