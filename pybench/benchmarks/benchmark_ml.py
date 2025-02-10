@@ -6,6 +6,12 @@ import numpy as np
 
 from pybench import run_benchmark
 
+### Data downloaded from https://data.rapids.ai/viz-data/146M_predictions_v2.arrow.gz
+### https://docs.rapids.ai/api/cuxfilter/stable/user_guide/examples/mortgage_example/#Download-required-datasets
+### and converted to expected format
+data_dir = "/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/"
+n_components_run = 5
+
 _shapes = {
     "small": [(int(2 ** 14), 512), (int(2 ** 15), 512), (int(2 ** 16), 512)],
     "large": [(int(2 ** 20), 512), (int(2 ** 21), 512), (int(2 ** 22), 512)],
@@ -87,13 +93,10 @@ def load_mortgage(d):
 
     return {"module": d["module"], "data": data}
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_PCA(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.decomposition")
@@ -102,7 +105,7 @@ def test_PCA(benchmark, module, shape, data):
 
     def compute_func(data):
         kwargs = {
-            "n_components": 10,
+            "n_components": n_components_run,
             "whiten": False,
             "random_state": 42,
             "svd_solver": "full",
@@ -120,13 +123,10 @@ def test_PCA(benchmark, module, shape, data):
         {"module": module, "shape": shape, "data": data},
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["small"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_DBSCAN(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.cluster")
@@ -152,13 +152,10 @@ def test_DBSCAN(benchmark, module, shape, data):
         {"module": module, "shape": shape, "data": data},
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_TSVD(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.decomposition")
@@ -166,7 +163,7 @@ def test_TSVD(benchmark, module, shape, data):
         m = importlib.import_module("cuml")
 
     def compute_func(data):
-        kwargs = {"n_components": 10, "random_state": 42}
+        kwargs = {"n_components": n_components_run, "random_state": 42}
 
         if data["module"] == "sklearn":
             kwargs["algorithm"] = "arpack"
@@ -185,13 +182,10 @@ def test_TSVD(benchmark, module, shape, data):
         {"module": module, "shape": shape, "data": data},
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["small"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_KNN(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.neighbors")
@@ -221,13 +215,10 @@ def test_KNN(benchmark, module, shape, data):
         {"module": module, "shape": shape, "data": data},
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_SGD(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.linear_model")
@@ -274,13 +265,10 @@ def test_SGD(benchmark, module, shape, data):
         },
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_LinearRegression(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.linear_model")
@@ -314,13 +302,10 @@ def test_LinearRegression(benchmark, module, shape, data):
         },
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_Ridge(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.linear_model")
@@ -354,13 +339,10 @@ def test_Ridge(benchmark, module, shape, data):
         },
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_Lasso(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.linear_model")
@@ -398,13 +380,10 @@ def test_Lasso(benchmark, module, shape, data):
         },
     )
 
-### JAG ###
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
-## /projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz
-### ###
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
-@pytest.mark.parametrize("data", ["/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/mortgage.npy.gz"])
+@pytest.mark.parametrize("data", [data_dir+"mortgage.npy.gz"])
 def test_ElasticNet(benchmark, module, shape, data):
     if module == "sklearn":
         m = importlib.import_module("sklearn.linear_model")
