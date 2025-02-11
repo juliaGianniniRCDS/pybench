@@ -352,14 +352,17 @@ def test_Lasso(benchmark, module, shape, data):
 
     def compute_func(data):
         kwargs = {
-            "alpha": np.array([0.001]),
             "fit_intercept": True,
             "max_iter": 1000,
             "selection": "cyclic",
             "tol": 1e-10,
         }
-#            "normalize": False,
-#        }
+
+        if data["module"] == "sklearn":
+            kwargs["alpha"] = 0.001
+
+        elif data["module"] == "cuml":
+            kwargs["alpha"] = np.array([0.001])
 
         X_train = data["data"]["X_train"]
         y_train = data["data"]["y_train"]
@@ -382,6 +385,7 @@ def test_Lasso(benchmark, module, shape, data):
         },
     )
 
+## This seems to be the same thing as test_Lasso above -- not sure if that's the intent?
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
@@ -394,14 +398,17 @@ def test_ElasticNet(benchmark, module, shape, data):
 
     def compute_func(data):
         kwargs = {
-            "alpha": np.array([0.001]),
             "fit_intercept": True,
             "max_iter": 1000,
             "selection": "cyclic",
             "tol": 1e-10,
-        }    
-#            "normalize": False,
-#        }
+        }
+
+        if data["module"] == "sklearn":
+            kwargs["alpha"] = 0.001
+
+        elif data["module"] == "cuml":
+            kwargs["alpha"] = np.array([0.001])
 
         X_train = data["data"]["X_train"]
         y_train = data["data"]["y_train"]
