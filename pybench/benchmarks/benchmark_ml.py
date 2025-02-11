@@ -230,19 +230,20 @@ def test_SGD(benchmark, module, shape, data):
             "learning_rate": "adaptive",
             "eta0": 0.07,
             "penalty": "elasticnet",
-            "loss": "squared_loss",
             "tol": 0.0,
         }
 
         if data["module"] == "sklearn":
             kwargs["max_iter"] = 10
             kwargs["fit_intercept"] = True
+            kwargs["loss"] = "squared_error"
 
             sgd = m.SGDRegressor(**kwargs)
 
         elif data["module"] == "cuml":
             kwargs["epochs"] = 10
             kwargs["batch_size"] = 512
+            kwargs["loss"] = "squared_loss"
 
             sgd = m.SGD(**kwargs)
 
@@ -276,7 +277,7 @@ def test_LinearRegression(benchmark, module, shape, data):
         m = importlib.import_module("cuml")
 
     def compute_func(data):
-        kwargs = {"fit_intercept": True, "normalize": True}
+        kwargs = {"fit_intercept": True}#, "normalize": True}
 
         if data["module"] == "cuml":
             kwargs["algorithm"] = "eig"
@@ -313,7 +314,7 @@ def test_Ridge(benchmark, module, shape, data):
         m = importlib.import_module("cuml")
 
     def compute_func(data):
-        kwargs = {"fit_intercept": False, "normalize": True, "alpha": 0.1}
+        kwargs = {"fit_intercept": False, "alpha": 0.1}#, "normalize": True}
 
         if data["module"] == "cuml":
             kwargs["solver"] = "svd"
@@ -353,11 +354,12 @@ def test_Lasso(benchmark, module, shape, data):
         kwargs = {
             "alpha": np.array([0.001]),
             "fit_intercept": True,
-            "normalize": False,
             "max_iter": 1000,
             "selection": "cyclic",
             "tol": 1e-10,
         }
+#            "normalize": False,
+#        }
 
         X_train = data["data"]["X_train"]
         y_train = data["data"]["y_train"]
@@ -394,11 +396,12 @@ def test_ElasticNet(benchmark, module, shape, data):
         kwargs = {
             "alpha": np.array([0.001]),
             "fit_intercept": True,
-            "normalize": False,
             "max_iter": 1000,
             "selection": "cyclic",
             "tol": 1e-10,
-        }
+        }    
+#            "normalize": False,
+#        }
 
         X_train = data["data"]["X_train"]
         y_train = data["data"]["y_train"]
