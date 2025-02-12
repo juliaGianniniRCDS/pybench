@@ -385,7 +385,7 @@ def test_Lasso(benchmark, module, shape, data):
         },
     )
 
-## This seems to be the same thing as test_Lasso above -- not sure if that's the intent?
+## This seems to be the same thing as test_Lasso above -- not sure if that's the intent, changing it.
 #@pytest.mark.parametrize("data", ["data/mortgage.npy.gz"])
 @pytest.mark.parametrize("module", ["sklearn", "cuml"])
 @pytest.mark.parametrize("shape", _shapes["large"])
@@ -413,7 +413,7 @@ def test_ElasticNet(benchmark, module, shape, data):
         X_train = data["data"]["X_train"]
         y_train = data["data"]["y_train"]
 
-        lasso = m.Lasso(**kwargs)
+        lasso = m.ElasticNet(**kwargs)
 
         lasso.fit(X_train, y_train)
 
