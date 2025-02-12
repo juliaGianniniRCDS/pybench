@@ -1,6 +1,6 @@
 import json
-import pandas as pd
-
+import pandas
+from pandas import json_normalize
 
 def benchmark_json_to_pandas(path):
     """Convert the json "benchmarks" field of a pytest-benchmark json file into
@@ -24,7 +24,7 @@ def benchmark_json_to_pandas(path):
     """
     data = json.load(open(path))
 
-    return pd.io.json.json_normalize(data=data["benchmarks"])
+    return json_normalize(data=data["benchmarks"])
 
 
 def compute_speedup(slow_df, fast_df, operation_list, param_list, stats_param):
