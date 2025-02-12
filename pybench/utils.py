@@ -202,5 +202,5 @@ def split_params_list(df, params_name, columns=None):
     ncols = max([len(l) for l in lst])
     if columns is None:
         columns = [params_name + "." + str(i) for i in range(ncols)]
-    split_param = pd.DataFrame(lst, columns=columns)
+    split_param = pandas.DataFrame(lst, columns=columns)
     return df.join(split_param, how="outer")

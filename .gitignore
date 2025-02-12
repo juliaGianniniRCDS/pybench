@@ -1,5 +1,6 @@
 __pycache__/
 build/
+.ipynb_checkpoints/
 pybench.egg-info
 .pytest_cache
 .DS_Store

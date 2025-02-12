@@ -9,7 +9,7 @@ from pybench import run_benchmark
 ### Data downloaded from https://data.rapids.ai/viz-data/146M_predictions_v2.arrow.gz
 ### https://docs.rapids.ai/api/cuxfilter/stable/user_guide/examples/mortgage_example/#Download-required-datasets
 ### and converted to expected format
-data_dir = "/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/mortgage/"
+# data_dir = "/location/of/data"
 n_components_run = 5
 
 _shapes = {

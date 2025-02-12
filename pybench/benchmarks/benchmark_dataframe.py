@@ -6,7 +6,7 @@ from pybench import run_benchmark
 
 ### Data downloaded from https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page 
 ### and converted to expected format
-data_dir = "/projects/a9009/tdm5510/workshops/codex_042025/cupy_bench/datasets/nyc_taxi/2015/"
+# data_dir = "/location/of/data"
 
 #@pytest.mark.parametrize(
 #    "data_path", ["/datasets/nyc_taxi/2015/yellow_tripdata_2015-01.csv"]
