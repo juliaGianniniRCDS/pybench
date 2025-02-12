@@ -12,5 +12,5 @@ pip install git+https://github.com/pentschev/pybench
 ## Running sample benchmarks
 
 ```
-pytest pybench/benchmarks/*
+pytest pybench/benchmarks/* --benchmark-json=./benchmark_results.json
 ```
