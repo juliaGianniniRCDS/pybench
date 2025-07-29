@@ -1,16 +1,6 @@
 # pybench
-Automation tools for Python benchmarking
+
+Adapted from https://github.com/pentschev/pybench to run on 
+Quest, Northwestern's HPC cluster. 
 
 
-## Installing
-
-```
-pip install git+https://github.com/pentschev/pybench
-```
-
-
-## Running sample benchmarks
-
-```
-pytest pybench/benchmarks/* --benchmark-json=./benchmark_results.json
-```
